@@ -50,8 +50,8 @@ const CreateListing = () => {
           setUploading(false);
         });
     } else {
-      if (files.length>4) {
-        setImageUploadError("You can only upload 4 images per listing");
+      if (files.length>31) {
+        setImageUploadError("You can only upload 30 images per listing");
         setUploading(false);
       }
 
