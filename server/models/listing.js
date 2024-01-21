@@ -1,0 +1,39 @@
+const { Schema, model, Model } = require("mongoose");
+// const defaultList = "../defaultList.png";
+const listSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      default: "No Title is provided by the author",
+
+    },
+
+    description: {
+      type: String,
+      required: false,
+      default: "No description is provided by the author",
+    },
+    topic: {
+      type: String,
+      required: true,
+      default: "No topic name is provided by the author",
+
+    },
+
+    imageUrls: {
+      type: Array,
+      // default:[defaultList],
+      required: false,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  },
+  { timestamps: true }
+);
+
+const Listing = model("Listing", listSchema);
+
+module.exports = Listing;
