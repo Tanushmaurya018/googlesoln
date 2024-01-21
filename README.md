@@ -30,7 +30,6 @@ Storage: Effortless file storage and sharing.
 Redux:
 
 State Management: Efficiently manage and share application state.
-pen your browser and go to http://localhost:3000 to view the app.
 
 # Contributing
 
