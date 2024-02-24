@@ -4,6 +4,7 @@ Welcome to our Google Solution Challenge project!
 🎓 This MERN stack project with Firebase for authentication and storage, along with Redux for state management, is designed to connect seniors with juniors for resource sharing and mentorship.
 
 Live Link : https://googlesolnchallenge.onrender.com
+Youtube Video : https://youtu.be/EOYsJEOT3fc
 
 # Features
 
