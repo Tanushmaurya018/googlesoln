@@ -23,25 +23,29 @@ const Home = () => {
   SwiperCore.use([Autoplay]);
 
   SwiperCore.use([Pagination]);
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`/api/listing/getalllist`);
-
-      setLists(response.data.allList);
-      // console.log(response.data.allList);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
 
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          "https://us-west-2.aws.neurelo.com/rest/listings",
+          {
+            headers: {
+              "X-API-KEY":
+                "neurelo_9wKFBp874Z5xFw6ZCfvhXeGq7u9wcG3qNdLNqOo74C2F+LaH4cKx5ezPFu3dmeypd/4F3jjta4A6j/SgznzPOKrewIWDKc3fxjZAYml6VOsM/KmdMvFTDsGLYSYIPXYN5GAr+pNwXY/tGwKZJgF91YaQ6fFs+eCSqWnA9Ruc9uoHovTTJ4vPu7DjQBeodwa/_U1hSf3yW6S65HVizNvIHNALadYaxu0Of4ZX6dfooXH4=",
+            },
+          }
+        );
+        setLists(response.data.data);
+        setLoading(false);
+      } catch (error) {}
+    };
     fetchData();
   }, []);
 
   return (
-    <div className="container mx-auto bg-gradient-to-b from-red-200 via-red-300 to-yellow-200 ">
+    <div className="container mx-auto bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900">
       {loading ? (
         <Loader />
       ) : (
@@ -73,22 +77,18 @@ const Home = () => {
               </div>
 
               <h1 className=" flex justify-center text-3xl md:text-7xl text-gray-300 z-[2]">
-                Welcome To JuniorLearnLink.com{" "}
+                Welcome To JuniorLearnLink
               </h1>
               <p
                 className="text-sm md:text-3xl text-gray-400 w-3/4
               z-[2]"
               >
-                Welcome to JuniorLearnLink.com - Where seniors share wisdom, juniors thrive.
-                 Your go-to platform for collaborative learning and resource exchange.
+                Welcome to JuniorLearnLink.com - Where seniors share wisdom,
+                juniors thrive. Your go-to platform for collaborative learning
+                and resource exchange.
               </p>
 
               <div className="flex justify-between z-[2]">
-                <Link to="/login">
-                  <h1 className=" text-2sm md:text-2xl z-10 px-5 md:px-10 rounded-full bg-green-600  py-2 text-white">
-                    Log In
-                  </h1>
-                </Link>
 
                 <Link to="/createlisting">
                   <h1 className="  text-2sm md:text-2xl z-10 px-5 md:px-10 rounded-full bg-blue-600  py-2 text-white">
@@ -103,7 +103,7 @@ const Home = () => {
             <div className=" flex flex-wrap justify-center items-center ">
               {lists?.map((list) => {
                 return (
-                  <Link to={`/listing/${list._id}`} key={list._id}>
+                  <Link to={`/listing/${list.id}`} key={list.id}>
                     <Card
                       imageUrls={`${list.imageUrls[0]}`}
                       title={`${list.title}`}

@@ -15,7 +15,6 @@ const Listing = () => {
   SwiperCore.use([Autoplay]);
 
   SwiperCore.use([Pagination]);
-  // const {}
   const [list, setList] = useState();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(false);
@@ -23,7 +22,6 @@ const Listing = () => {
   const listId = params.listId;
   const [message, setMessage] = useState("");
 
-  //  const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
   const handleTextareaChange = (event) => {
     setMessage(event.target.value);
   };
@@ -31,12 +29,13 @@ const Listing = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`/api/listing/getlist/${listId}`);
-        setList(response.data.list);
+        const response = await axios.get(`https://us-west-2.aws.neurelo.com/rest/listings/${listId}`, {
+          headers: {
+            'X-API-KEY': 'neurelo_9wKFBp874Z5xFw6ZCfvhXeGq7u9wcG3qNdLNqOo74C2F+LaH4cKx5ezPFu3dmeypd/4F3jjta4A6j/SgznzPOKrewIWDKc3fxjZAYml6VOsM/KmdMvFTDsGLYSYIPXYN5GAr+pNwXY/tGwKZJgF91YaQ6fFs+eCSqWnA9Ruc9uoHovTTJ4vPu7DjQBeodwa/_U1hSf3yW6S65HVizNvIHNALadYaxu0Of4ZX6dfooXH4='
+          }
+        });
+        setList(response.data.data);
         setUser(response.data.userWoPassword);
-        // console.log(response.data);
-        // const mailtoLink = ;
-
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -44,12 +43,10 @@ const Listing = () => {
     };
     fetchData();
   }, []);
-
   return (
-    <div className="transition-all ease-linear container mx-auto overflow-hidden min-h-[100vh]">
+    <div className="transition-all  text-gray-300 ease-linear container mx-auto overflow-hidden min-h-[100vh]">
       {loading ? <Loader/> 
       :
-      
       currentUser == null ? 
         <div className="relative">
           <h1 className="absolute top-2 bottom-0 flex justify-center right-0 left-0 text-5xl ">
@@ -61,8 +58,8 @@ const Listing = () => {
       : (
         <div className="w-full p-1 ">
           {list && (
-            <div className="bg-orange-100 w-full md:p-2 p-5 ">
-              <Swiper
+            <div className="bg-gray-700 w-full md:p-2 p-5 ">
+            <Swiper
                 loop={true}
                 navigation
                 // autoplay={{
@@ -99,7 +96,7 @@ const Listing = () => {
                 </h1>
 
                 <div className="w-full flex md:flex-row flex-col ">
-                  <div className="w-full md:w-1/2  text-2xl p-3 md:p-8 flex flex-col gap-5 bg-orange-200 rounded-xl">
+                <div className="w-full md:w-1/2  text-2xl p-3 md:p-8 flex flex-col gap-5 bg-gray-500 rounded-xl">
                     <div className="flex  items-center text-xl md:text-3xl">
                       {/* <label className="font-bold text-black"></label> */}
                       <h1 className="">
@@ -117,13 +114,13 @@ const Listing = () => {
                   </div>
                   <div className="w-full md:w-1/2  p-5 justify-center items-center">
                     <textarea
-                      className="w-full bg-orange-300 rounded-2xl p-4 text-lg h-[300px] placeholder:text-black"
-                      placeholder="Send Your Message to Author..."
+                      className="w-full bg-gray-500 rounded-2xl p-4 text-lg h-[300px] placeholder:text-black"
+                        placeholder="Send Your Message to Author..."
                       value={message}
                       onChange={handleTextareaChange}
                     ></textarea>
                     <a
-                      href={`mailto:${user.email}?subject=Query Regarding Your Estate&body=${message}`}
+                      href={`mailto:${user?.email}?subject=Query Regarding Your Estate&body=${message}`}
                     >
                       <button className="w-full bg-gray-900 text-white px-4 py-2 rounded-full">
                         Contact

@@ -63,14 +63,14 @@ const Login = () => {
         <Loader />
       ) : (
         <div
-          className="container mx-auto p-20 lg:p-16  font-roboto  bg-white bg-opacity-50 h-[100vh]
+          className="container mx-auto p-20 lg:p-16  font-roboto  bg-black bg-opacity-50 h-[100vh]
       transition-colors duration-500 hover:"
         >
           <div className="flex flex-col gap-5 justify-center items-center  ">
             <form
               onSubmit={handleSubmit}
               className="flex flex-col gap-5 backdrop-blur shadow-2xl p-2
-             lg:p-5 rounded-2xl text-white items-center bg-gradient-to-t from-red-200 via-red-300 to-sky-200"
+             lg:p-5 rounded-2xl text-white items-center bg-gradient-to-t from-cyan-800 via-blue-900 to-gray-800"
             >
               <div className="text-center text-white rounded-full p-5 lg:p-10 text-3xl lg:text-7xl bg-gray-900">
                 <FaRegUser />
@@ -80,7 +80,7 @@ const Login = () => {
                 name="email"
                 placeholder="Email ID"
                 value={userData.email}
-                className="italic text-xl lg:text-2xl text-white px-5 py-2 rounded-full bg-gray-600 bg-opacity-60"
+                className="italic text-xl lg:text-2xl text-white px-5 py-2 rounded-full bg-gray-900 bg-opacity-60"
                 onChange={changeUserData}
                 required
               ></input>
@@ -89,7 +89,7 @@ const Login = () => {
                 name="password"
                 placeholder="Password"
                 value={userData.password}
-                className={` italic text-white text-xl lg:text-2xl px-5 py-2 rounded-full  bg-opacity-60`}
+                className={` italic text-white text-xl lg:text-2xl px-5 py-2 rounded-full bg-gray-900 bg-opacity-60`}
                 onChange={changeUserData}
                 required
               ></input>
@@ -115,7 +115,7 @@ const Login = () => {
                 {/* import { FaGoogle } from "react-icons/fa"; //for React.js */}
 
                 <div className="flex justify-center items-center text-gray-700">
-                  <h1 className="m-2 ">Don't have an account ?</h1>
+                  <h1 className="m-2 text-gray-400 ">Don't have an account ?</h1>
                   <Link to="/signup" className="underline text-blue-500">
                     Sign Up
                   </Link>

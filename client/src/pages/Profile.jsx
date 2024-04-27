@@ -116,8 +116,12 @@ const Profile = () => {
 
   const deleteList = async (listingId) => {
     try {
-      const response = await axios.post(`/api/listing/delete/${listingId}`);
-      setUserListings((prev) => {
+      await axios.delete(`https://us-west-2.aws.neurelo.com/rest/listings/${listingId}`,{
+        headers: {
+          'X-API-KEY': 'neurelo_9wKFBp874Z5xFw6ZCfvhXeGq7u9wcG3qNdLNqOo74C2F+LaH4cKx5ezPFu3dmeypd/4F3jjta4A6j/SgznzPOKrewIWDKc3fxjZAYml6VOsM/KmdMvFTDsGLYSYIPXYN5GAr+pNwXY/tGwKZJgF91YaQ6fFs+eCSqWnA9Ruc9uoHovTTJ4vPu7DjQBeodwa/_U1hSf3yW6S65HVizNvIHNALadYaxu0Of4ZX6dfooXH4='
+        }
+      });
+       setUserListings((prev) => {
         const updatedListings = prev.data.filter(
           (item) => item._id !== listingId
         );
@@ -128,13 +132,6 @@ const Profile = () => {
     }
   };
 
-  // const handleUpdateList=async(listingId)=>{
-  //   try {
-  //     const response=await axios.post(`/api/listing/update/${listingId}`)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
@@ -152,8 +149,8 @@ const Profile = () => {
         <Loader />
       ) : (
         <div className="h-full w-full flex flex-col justify-center items-center p-2 md:p-8 gap-3
-         bg-gray-200 bg-opacity-70 backdrop-blur rounded-2xl shadow-xl border-2 border-gray-300">
-          <h1 className="text-3xl md:text-5xl font-Montserrat">YOUR PROFILE</h1>
+         bg-gray-700 bg-opacity-70 backdrop-blur rounded-2xl shadow-xl ">
+          <h1 className="text-3xl md:text-5xl font-Montserrat text-gray-300">YOUR PROFILE</h1>
 
           <div className="flex flex-col md:flex-row-reverse w-full gap-10 md:gap-24  h-full justify-evenly">
             <div className="flex flex-col gap-10  items-center">
@@ -195,9 +192,9 @@ const Profile = () => {
             </div>
 
             <div className="flex flex-col gap-5 justify-between w-full md:w-3/4 ">
-              <div className="p-2 flex flex-col gap-6">
-                <div className="flex gap-5 items-end font-Manrope text-xl md:text-4xl border-b-4 pb-2">
-                  <label className=" font-bold">Name :</label>
+            <div className="p-2 flex flex-col gap-6 text-gray-300">
+            <div className="flex gap-5 items-end font-Manrope text-xl md:text-4xl border-b-4 pb-2">
+            <label className=" font-bold">Name :</label>
                   <h1>{currentUser.userWoPassword.username}</h1>
                 </div>{" "}
                 <div className="flex gap-5 items-end font-Manrope text-xl md:text-4xl border-b-4 pb-2">
@@ -206,7 +203,7 @@ const Profile = () => {
                 </div>{" "}
               </div>
 
-              <h1 className="text-3xl font-thin">Update Profile :</h1>
+              <h1 className="text-3xl font-thin text-gray-300">Update Profile :</h1>
               <div className="p-2 flex flex-col gap-5 ">
                 <input
                   className="text-xl px-1 bg-transparent border-b-2 border-gray-500 mt-4 focus:outline-none w-full focus:bg-transparent"
@@ -283,13 +280,13 @@ const Profile = () => {
               <IoIosArrowDropdown />
             </button>
 
-            <h1 className="w-full text-4xl">{userListings.message}</h1>
+            <h1 className="w-full text-4xl text-gray-300">{userListings.message}</h1>
 
             {userListings.data?.map((list, index) => {
               return (
                 <div
-                  className="flex flex-col md:flex-row gap-2 justify-between items-center bg-orange-100 p-5 rounded-xl w-full"
-                  key={list._id}
+                className="flex flex-col md:flex-row gap-2 justify-between items-center text-gray-300 bg-gray-600 p-5 rounded-xl w-full"
+                key={list._id}
                 >
                   <img
                     src={list.imageUrls?.[0]}

@@ -8,6 +8,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { useSelector } from "react-redux";
 
 import { formatProdErrorMessage } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
@@ -16,10 +17,12 @@ import defaultListPic from "../assets/defaultList.png"
 
 
 const CreateListing = () => {
+  const {currentUser} =useSelector((state)=>state.user)
   const [files, setFiles] = useState([]);
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
+    author:currentUser?.userWoPassword._id,
     title: "",
     description: "",
     topic: "",
@@ -87,7 +90,6 @@ const CreateListing = () => {
       );
     });
   };
-
   const changeUserData = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -96,8 +98,15 @@ const CreateListing = () => {
     e.preventDefault();
     setLoading(true)
     try {
-      const response = await axios.post("/api/listing/createlisting", formData);
-      // console.log("Saved Listing",response.data);
+        const response = await axios.post(
+          "https://us-west-2.aws.neurelo.com/rest/listings/__one",formData,
+          {
+            headers: {
+              "X-API-KEY":
+                "neurelo_9wKFBp874Z5xFw6ZCfvhXeGq7u9wcG3qNdLNqOo74C2F+LaH4cKx5ezPFu3dmeypd/4F3jjta4A6j/SgznzPOKrewIWDKc3fxjZAYml6VOsM/KmdMvFTDsGLYSYIPXYN5GAr+pNwXY/tGwKZJgF91YaQ6fFs+eCSqWnA9Ruc9uoHovTTJ4vPu7DjQBeodwa/_U1hSf3yW6S65HVizNvIHNALadYaxu0Of4ZX6dfooXH4=",
+            },
+          }
+        );      // console.log("Saved Listing",response.data);
       navigate("/profile")
       setLoading(false)
 
@@ -106,14 +115,12 @@ const CreateListing = () => {
       console.log(error);
     }
   };
-
-  // console.log(formData);
   return (
     <div className="transition-all ease-linear container mx-auto p-2 h-full w-full">
             {loading ? (
         <Loader />
       ) : (
-      <div className="flex flex-col gap-10  md:gap-20 w-full bg-gray-200 rounded-2xl p-5">
+        <div className="flex flex-col gap-10  md:gap-20 w-full bg-gray-700 rounded-2xl p-5 text-gray-300">
         <h1 className=" text-6xl font-Montserrat text-center">
           Create Listing
         </h1>
@@ -151,119 +158,13 @@ const CreateListing = () => {
               required
             ></input>
 
-            {/* <div className="flex md:flex-row flex-col items-center justify-between text-xl gap-10 ">
-
-              <div className="flex flex-col gap-5 w-full md:w-1/2 justify-between">
-                <div className="w-full flex gap-5 justify-between">
-                  <label>Furnished</label>
-                  <input
-                    type="text"
-                    // onChange={handleCheckboxChange}
-                    name="furnished"
-                    className="h-10 w-40 px-4 py-2 rounded-full  uppercase "
-                    onChange={changeUserData}
-                    value={formData.furnished}
-                    required
-                  ></input>
-                </div>
-                <div className="w-full flex gap-5 justify-between">
-                  <label>Parking</label>
-                  <input
-                    type="text"
-                    // onClick={checkBox}
-                    name="parking"
-                    className="h-10 w-40 px-4 py-2 rounded-full  uppercase "
-                    onChange={changeUserData}
-                    value={formData.parking}
-                    required
-                  ></input>
-                </div>
-                <div className="w-full flex gap-5 justify-between">
-                  <label>Rent</label>
-                  <input
-                    type="text"
-                    // onClick={checkBox}
-                    name="rent"
-                    className="h-10 w-40 px-4 py-2 rounded-full  uppercase "
-                    onChange={changeUserData}
-                    value={formData.rent}
-                    required
-                  ></input>
-                </div>
-                <div className="w-full flex gap-5 justify-between">
-                  <label>Sale</label>
-                  <input
-                    type="text"
-                    // onClick={checkBox}
-                    name="sale"
-                    className=" h-10 w-40 px-4 py-2 rounded-full  uppercase "
-                    onChange={changeUserData}
-                    value={formData.sale}
-                    required
-                  ></input>
-                </div>
-              </div>
-
-              <div className="text-xl flex flex-col gap-5 w-full md:w-1/2 ">
-                <div className="w-full flex gap-5 justify-between items-end">
-                  <label>Bedroom</label>
-                  <input
-                    type="number"
-                    name="bedroom"
-                    className="text-xl px-1 bg-transparent border-b-2 border-gray-500 mt-2 
-                    focus:outline-none w-1/2 focus:bg-transparent text-right"
-                    onChange={changeUserData}
-                    value={formData.bedroom}
-                    required
-                  ></input>
-                </div>{" "}
-                <div className="w-full flex gap-5 justify-between items-end">
-                  <label>Bathroom</label>
-                  <input
-                    type="number"
-                    name="bathroom"
-                    onChange={changeUserData}
-                    className="text-xl px-1 bg-transparent border-b-2 border-gray-500 mt-2 
-                    focus:outline-none w-1/2 focus:bg-transparent text-right"
-                    value={formData.bathroom}
-                    required
-                  ></input>
-                </div>
-                <div className="w-full flex gap-5 justify-between items-end">
-                  <label>Regular Price</label>
-                  <input
-                    type="number"
-                    name="regularprice"
-                    className="text-xl px-1 bg-transparent border-b-2 border-gray-500 mt-2 
-                    focus:outline-none w-1/2 focus:bg-transparent text-right"
-                    onChange={changeUserData}
-                    value={formData.regularprice}
-                    required
-                  ></input>
-                </div>
-                <div className="w-full flex gap-5 justify-between items-end">
-                  <label>Discounted Price</label>
-                  <input
-                    type="number"
-                    name="discountedprice"
-                    className="text-xl px-1 bg-transparent border-b-2 border-gray-500 mt-2 
-                    focus:outline-none w-1/2 focus:bg-transparent text-right"
-                    onChange={changeUserData}
-                    value={formData.discountedprice}
-                    required
-                  ></input>
-                </div>
-              </div>
-
-            </div> */}
-
           </div>
 
-          <div className="flex flex-col justify-center items-center border-2 gap-5 border-red-200 p-5">
+          <div className="flex flex-col justify-center items-center border-2 gap-5 border-black p-5">
             {formData.imageUrls.length > 0 &&
               formData.imageUrls.map((img, i) => (
                 <div
-                  className="flex justify-between items-center w-full bg-gray-100 p-4 rounded-md"
+                  className="flex justify-between items-center w-full bg-gray-900 p-4 rounded-md"
                   key={img}
                 >
                   <img

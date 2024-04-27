@@ -15,9 +15,9 @@ const Header = () => {
   const dispatch = useDispatch();
 
   return (
-    <header className="transition-all ease-in-out container mx-auto bg-gradient-to-r from-rose-100 to-teal-100 w-full h-[70px] flex justify-between items-center p-3 gap-2">
+    <header className="transition-all ease-in-out container mx-auto bg-gradient-to-b from-gray-900 to-gray-600 bg-gradient-to-r w-full h-[70px] flex justify-between items-center p-3 gap-2">
       <Link to="/">
-        <h1 className="text-lg lg:text-3xl ">JuniorLearnLink</h1>
+        <h1 className="text-lg lg:text-3xl text-gray-300">JuniorLearnLink</h1>
       </Link>
 
       {/* <div className="flex justify-center items-center gap-1">
@@ -31,7 +31,7 @@ const Header = () => {
         </button>
       </div> */}
 
-      <ul className="flex items-center gap-5 text-2xl">
+      <ul className="flex items-center gap-5 text-2xl text-gray-300">
         {/* <div className="hidden lg:inline">
           <Link to="/about">
             <li className="">About</li>
@@ -53,8 +53,8 @@ const Header = () => {
         ) : (
           <Link to="/login">
             {" "}
-            <li className="font-Montserrat text-xl rounded-full md:hover:px-16 text-white bg-green-600
-             hover:bg-white hover:text-black transition-all ease-linear p-3">
+            <li className="font-Montserrat text-xl rounded-full md:hover:px-16 text-gray-100 bg-cyan-900
+             hover:bg-gray-800  transition-all ease-linear p-3">
               <span className="inline md:hidden"><FaLock /></span>
               <span className="hidden md:inline">Log In</span>
             </li>
